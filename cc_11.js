@@ -72,7 +72,16 @@ class Library {
         } else {
             console.log("Book or borrower not found")
         }
-        
+    }
+    returnBook(borrowerId, isbn) {
+        const borrower = this.borrowers.find(b => b.borrowerId === borrowerId); // finds borrower by id
+        const book = this.books.find(b => b.isbn === isbn); // finds book by isbn
+        if (book) {
+            book.updateCopies(1); // updates copies
+            if (borrower) {
+                borrower.returnBook(book.title); // returns book
+            }
+        }
     }
 } // class for library
 
@@ -83,3 +92,8 @@ library.listBooks(); // Title: The Great Gatsby, Author: F. Scott Fitzgerald, IS
 library.lendBook(201, 123456); // brrrows book
 console.log(book1.getDetails());
 console.log(borrower1.borrowedBooks); // [ 'The Great Gatsby' ]
+
+library.returnBook(201, 123456); // returns book
+console.log(book1.getDetails());
+
+console.log(borrower1.borrowedBooks); // []
