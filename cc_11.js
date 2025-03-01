@@ -22,7 +22,7 @@ console.log(book1.getDetails()); // Title: The Great Gatsby, Author: undefined, 
 
 // Task 2
 class Borrower {
-    constructor(name, borrowerId, borrowedBooks) {
+    constructor(name, borrowerId,) {
         this.name = name; // string
         this.borrowerId = borrowerId; // number
         this.borrowedBooks = []; // array
@@ -44,7 +44,7 @@ console.log(borrower1.borrowedBooks); // []
 
 // task 3 
 class Library {
-    constructor(books, borrowers) {
+    constructor() {
         this.books = []; // array
         this.borrowers = []; // array
     }
@@ -58,13 +58,13 @@ class Library {
         this.borrowers.push(borrower); // adds brrower to array
     }
     // task 4
-    lendBook(borrowerId, isbn) {
+    lendbook(borrowerId, isbn) {
         const book = this.books.find(book => book.isbn === isbn); // finds book by isbn
         const borrower = this.borrowers.find(borrower => borrower.borrowerId === borrowerId); // finds borrower by id
         if (book && borrower) {
         if (book.copies > 0) {
             book.updateCopies(-1); // updates copies
-            borrower.borrowBook(book.title); // borrows selected book
+            borrower.borrowBook(book); // borrows selected book
             } 
             else {
                 console.log("No copies available");
@@ -73,13 +73,14 @@ class Library {
             console.log("Book or borrower not found")
         }
     }
+    // task 5
     returnBook(borrowerId, isbn) {
         const borrower = this.borrowers.find(b => b.borrowerId === borrowerId); // finds borrower by id
         const book = this.books.find(b => b.isbn === isbn); // finds book by isbn
         if (book) {
             book.updateCopies(1); // updates copies
             if (borrower) {
-                borrower.returnBook(book.title); // returns book
+                borrower.returnBook(book); // returns book
             }
         }
     }
@@ -87,9 +88,9 @@ class Library {
 
 const library = new Library();
 library.addBook(book1); // adding book to library
-library.listBooks(); // Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 4
+library.listBooks(); // Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 3
 
-library.lendBook(201, 123456); // brrrows book
+library.lendbook(201, 123456); // brrrows book
 console.log(book1.getDetails());
 console.log(borrower1.borrowedBooks); // [ 'The Great Gatsby' ]
 
