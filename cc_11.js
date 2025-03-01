@@ -31,7 +31,7 @@ class Borrower {
         this.borrowedBooks.push(book); // adding books to array
     }
     returnBook(book) {
-        this.borrowedBooks = this.borrowedBooks.filter(b => b.isbn !== book.isbn); // removing books to array
+        this.borrowedBooks = this.borrowedBooks.filter(b => b !== book); // removing books to array
     }
 }; // class for borrower
 
@@ -41,3 +41,21 @@ console.log(borrower1.borrowedBooks); // [ 'The Great Gatsby' ]
 
 borrower1.returnBook("The Great Gatsby");
 console.log(borrower1.borrowedBooks); // []
+
+// task 3 
+class Library {
+    constructor(books, borrowers) {
+        this.books = []; // array
+        this.borrowers = []; // array
+    }
+    addBook(book) {
+        this.books.push(book); // adds books to arryy
+    }
+    listBooks() {
+        this.books.map(book => console.log(book.getDetails())); // lists book details
+    }
+}; // class for library
+
+const library = new Library();
+library.addBook(book1); // adding book to library
+library.listBooks(); // Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 4
