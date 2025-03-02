@@ -15,10 +15,10 @@ class Book {
 }; // class for book
 
 const book1 = new Book("The Great Gatsby", "F. Scott Fitzgerald", 123456, 5);
-console.log(book1.getDetails()); // Title: The Great Gatsby, Author: undefined, ISBN: 123456, Copies: 5
+console.log(book1.getDetails()); // Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 5
 
 book1.updateCopies(-1); // udating copies of book
-console.log(book1.getDetails()); // Title: The Great Gatsby, Author: undefined, ISBN: 123456, Copies: 4
+console.log(book1.getDetails()); // Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 4
 
 // Task 2
 class Borrower {
@@ -31,15 +31,15 @@ class Borrower {
         this.borrowedBooks.push(book); // adding books to array
     }
     returnBook(book) {
-        this.borrowedBooks = this.borrowedBooks.filter(b => b !== book); // removing books to array
+        this.borrowedBooks = this.borrowedBooks.filter(b => b.isbn !== book.isbn); // removing books to array
     }
 }; // class for borrower
 
 const borrower1 = new Borrower("Alice Johnson", 201);
-borrower1.borrowBook("The Great Gatsby");
-console.log(borrower1.borrowedBooks); // [ 'The Great Gatsby' ]
+borrower1.borrowBook(book1);
+console.log(borrower1.borrowedBooks); // [ Book { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', isbn: 123456, copies: 4 } ]
 
-borrower1.returnBook("The Great Gatsby");
+borrower1.returnBook(book1);
 console.log(borrower1.borrowedBooks); // []
 
 // task 3 
@@ -58,7 +58,7 @@ class Library {
         this.borrowers.push(borrower); // adds brrower to array
     }
     // task 4
-    lendbook(borrowerId, isbn) {
+    lendBook(borrowerId, isbn) {
         const book = this.books.find(book => book.isbn === isbn); // finds book by isbn
         const borrower = this.borrowers.find(borrower => borrower.borrowerId === borrowerId); // finds borrower by id
         if (book && borrower) {
@@ -88,11 +88,12 @@ class Library {
 
 const library = new Library();
 library.addBook(book1); // adding book to library
-library.listBooks(); // Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 3
+library.addBorrower(borrower1); // adding borrower to library
+library.listBooks(); // Title: The Great Gatsby, Author: F. Scott Fitzgerald, ISBN: 123456, Copies: 5
 
-library.lendbook(201, 123456); // brrrows book
+library.lendBook(201, 123456); // borrows book
 console.log(book1.getDetails());
-console.log(borrower1.borrowedBooks); // [ 'The Great Gatsby' ]
+console.log(borrower1.borrowedBooks); // Book { title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', isbn: 123456, copies: 3 }
 
 library.returnBook(201, 123456); // returns book
 console.log(book1.getDetails());
